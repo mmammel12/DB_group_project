@@ -11,29 +11,33 @@ def basicForm():
     return template("view.html")
 
 
-@post("/basicResult")
+@post("/viewResult")
 def basicResult():
-    return template("result.html")
+    return template("viewResult.html")
 
 
-@route("/bbForm")
+@route("/edit")
 def bbForm():
-    return template("bbForm.html")
+    return template("edit.html")
 
 
-@post("/bbResult")
+@post("/editResult")
 def bbResult():
-    return template("bbResult.html")
+    return template("editResult.html")
 
 
-@route("/final")
+@route("/delete")
 def final():
-    return template("final.html")
+    return template("delete.html")
 
 
-@post("/finalResult")
+@post("/deleteConfirm")
 def finalResult():
-    return template("finalResult.html")
+    return template("deleteConfirm.html")
+
+@post("/deleteResult")
+def finalResult():
+    return template("deleteResult.html")
 
 
 application = default_app()
