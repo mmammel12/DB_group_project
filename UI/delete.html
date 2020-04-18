@@ -17,16 +17,21 @@
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
     <div class="container-fluid mx-3 mt-3">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+        <h3>Delete:<span class="badge badge-danger"></span></h3>
+        <form class="col-6">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Example select</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>Hole from a Course</option>
+                    <option>Hole + Tee Combo from a Course</option>
+                    <option>Course</option>
+                    <option>City*</option>
+                    <option>State/Province*</option>
+                    <option>Country*</option>
+                </select>
             </div>
-        </div>
+            <button type="submit" class="btn btn-danger">Submit</button>
+        </form>
     </div>
 </body>
 </html>

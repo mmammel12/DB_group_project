@@ -17,17 +17,21 @@
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
     <div class="container-fluid mx-3 mt-3">
-        <h3>Add:<span class="badge badge-primary"></span></h3>
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+        <h3>Add:<span class="badge badge-secondary"></span></h3>
+        <form class="col-6">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Example select</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>New Tee to a hole</option>
+                    <option>New Hole to a Course</option>
+                    <option>New Course to a City</option>
+                    <option>New City to a State/Province</option>
+                    <option>New State/Province to a Country</option>
+                    <option>New Country</option>
+                </select>
             </div>
-        </div>
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
     </div>
 </body>
 </html>
