@@ -1,4 +1,14 @@
-from bottle import default_app, route, post, template, run
+from bottle import default_app, route, post, template, run, static_file
+
+
+@route("/static/css/<filename>")
+def css(filename):
+    return static_file(filename, root="./static/css/")
+
+
+@route("/static/js/<filename>")
+def js(filename):
+    return static_file(filename, root="./static/js/")
 
 
 @route("/")

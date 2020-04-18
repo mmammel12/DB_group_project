@@ -7,7 +7,6 @@ password = 'Venwiv5-CSCI44300'
 conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor = conn.cursor()
 
-cursor = conn.cursor()
 
 cursor.execute("SELECT * FROM Courses")
 
