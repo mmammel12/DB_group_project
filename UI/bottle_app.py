@@ -7,36 +7,35 @@ def home():
 
 
 @route("/view")
-def basicForm():
+def viewForm():
     return template("view.html")
 
 
 @post("/viewResult")
-def basicResult():
+def viewResult():
     return template("viewResult.html")
 
 
-@route("/edit")
-def bbForm():
-    return template("edit.html")
-
+@post("/add")
+def addForm():
+    return template("add.html")
 
 @post("/editResult")
-def bbResult():
-    return template("editResult.html")
+def addResult():
+    return template("addResult.html")
 
 
 @route("/delete")
-def final():
+def deleteForm():
     return template("delete.html")
 
 
 @post("/deleteConfirm")
-def finalResult():
+def deleteConfirm():
     return template("deleteConfirm.html")
 
 @post("/deleteResult")
-def finalResult():
+def deleteResult():
     return template("deleteResult.html")
 
 
