@@ -1,15 +1,18 @@
 "use strict";
 
 function createEventListeners() {
-    document.getElementById("ViewFormControlSelect").addEventListener("change", chooseMainInputs);
-    document.getElementById("courseInputSelect").addEventListener("change", chooseMainInputs);
-    document.getElementById("countryInputSelect").addEventListener("change", chooseMainInputs);
-    document.getElementById("stateInputSelect").addEventListener("change", chooseMainInputs);
-    document.getElementById("cityInputSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("AddFormControlSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("courseSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("holeSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("parSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("teeSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("countrySelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("stateSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("citySelect").addEventListener("change", chooseMainInputs);
 }
 
 function chooseMainInputs() {
-    if ($("select#ViewFormControlSelect").val() == "choose")
+    if ($("select#AddFormControlSelect").val() == "choose")
     {
         resetSelects();
         hideAll();
@@ -22,66 +25,14 @@ function chooseMainInputs() {
 }
 
 function showSumbit() {
-    let mainSelect = $("select#ViewFormControlSelect").val();
+    let mainSelect = $("select#AddFormControlSelect").val();
 
-    if (mainSelect == "choose") {
-        resetSelects();
-        hideAll();
-    }
-    else if (mainSelect == "holes") {
-        if ($("select#courseInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "city") {
-        if ($("select#countryInputSelect").val() != "choose") {
-            if ($("select#stateInputSelect").val() != "choose") {
-                if ($("select#cityInputSelect").val() != "choose") {
-                    $("#submitBtn").removeClass("hidden");
-                }
-                else {
-                    $("#submitBtn").addClass("hidden");
-                }
-            }
-            else {
-                $("#submitBtn").addClass("hidden");
-            }
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "state") {
-        if ($("select#countryInputSelect").val() != "choose") {
-            if ($("select#stateInputSelect").val() != "choose") {
-                $("#submitBtn").removeClass("hidden");
-            }
-            else {
-                $("#submitBtn").addClass("hidden");
-            }
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "country") {
-        if ($("select#countryInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "locs" || mainSelect == "courses") {
-        $("#submitBtn").removeClass("hidden");
-    }
+    // TODO
 }
 
 function showCourses() {
-    switch($("select#ViewFormControlSelect").val()) {
+    // TODO
+    switch($("select#AddFormControlSelect").val()) {
         case "holes":
             $("#courseInput").removeClass("hidden");
             break;
@@ -101,19 +52,19 @@ function showCourses() {
 }
 
 function showCountries() {
-    let mainSelect = $("select#ViewFormControlSelect").val();
+    let mainSelect = $("select#AddFormControlSelect").val();
 
     switch(mainSelect) {
-        case "locs":
-        case "courses":
-        case "holes":
-            $("#countryInput").val("choose");
-            $("#countryInput").addClass("hidden");
-            break;
         case "city":
         case "state":
+            $("#countrySelect").removeClass("hidden");
+            break;
+        case "tee":
+        case "hole":
+        case "default18":
+        case "course":
         case "country":
-            $("#countryInput").removeClass("hidden");
+            $("#countrySelect").addClass("hidden");
             break;
         case "choose":
             resetSelects();
@@ -122,89 +73,75 @@ function showCountries() {
     }
 
     showStates();
-    showCities();
+    showCityInput();
 }
 
 function showStates() {
-    let mainSelect = $("select#ViewFormControlSelect").val();
+    let mainSelect = $("select#AddFormControlSelect").val();
 
-    if (mainSelect == "city" || mainSelect == "state") {
-        if ($("select#countryInputSelect").val() != "choose") {
-            $("#stateInput").removeClass("hidden");
-            $("#stateInputSelect > option").each(function() {
-                if (this.id == $("#countryInputSelect").val()) {
-                    $(this).removeClass("hidden");
-                }
-                else if (this.value != "choose") {
-                    $(this).addClass("hidden");
-                }
-            });
+    if (mainSelect == "city" || mainSelect == "course") {
+        if ($("#countryInputSelect").val() != "choose") {
+            $("#stateSelect").removeClass("hidden");
         }
         else {
-            $("#stateInput").val("choose");
-            $("#stateInput").addClass("hidden");
+            $("#stateSelect").addClass("hidden");
         }
     }
-    else if (mainSelect == "choose") {
-        resetSelects();
-        hideAll();
-    }
     else {
-        $("#stateInput").val("choose");
-        $("#stateInput").addClass("hidden");
+        $("#stateSelect").addClass("hidden");
     }
     
-    showCities();
+    showCityInput();
 }
 
-function showCities() {
-    let mainSelect = $("select#ViewFormControlSelect").val();
+function showCityInput() {
+    let mainSelect = $("select#AddFormControlSelect").val();
 
     if (mainSelect == "chooose") {
         resetSelects();
         hideAll();
     }
-    else if (mainSelect == "city") {
-        if ($("select#countryInputSelect").val() != "choose") {
-            if ($("select#stateInputSelect").val() != "choose") {
-                $("#cityInput").removeClass("hidden");
-                $("#cityInputSelect > option").each(function() {
-                    if (this.id == $("#stateInputSelect").val()) {
-                        $(this).removeClass("hidden");
-                    }
-                    else if (this.value != "choose") {
-                        $(this).addClass("hidden");
-                    }
-                });
-            }
-            else {
-                $("#cityInput").val("choose");
-                $("#cityInput").addClass("hidden");
-            }
+    else if (mainSelect == "city" || mainSelect == "course") {
+        if ($("#stateInputSelect").val() != "choose") {
+            $("#cityName").removeClass("hidden");
         }
         else {
-            $("#cityInput").val("choose");
-            $("#cityInput").addClass("hidden");
+            $("#cityName").addClass("hidden");
         }
     }
     else {
-        $("#cityInput").val("choose");
-        $("#cityInput").addClass("hidden");
+        $("#cityName").addClass("hidden");
     }
 }
 
 function resetSelects() {
-    $("#courseInput").val("choose");
-    $("#countryInput").val("choose");
-    $("#stateInput").val("choose");
-    $("#cityInput").val("choose");
+    $("#courseSelect").val("choose");
+    $("#holeSelect").val("choose");
+    $("#parSelect").val("choose");
+    $("#teeSelect").val("choose");
+    $("#countrySelect").val("choose");
+    $("#stateSelect").val("choose");
+    $("#citySelect").val("choose");
+    $("#holeName").val("");
+    $("#cityName").val("");
+    $("#stateName").val("");
+    $("#countryName").val("");
+    $("#courseName").val("");
 }
 
 function hideAll() {
-    $("#courseInput").addClass("hidden");
-    $("#countryInput").addClass("hidden");
-    $("#stateInput").addClass("hidden");
-    $("#cityInput").addClass("hidden");
+    $("#courseSelect").addClass("hidden");
+    $("#holeSelect").addClass("hidden");
+    $("#parSelect").addClass("hidden");
+    $("#teeSelect").addClass("hidden");
+    $("#countrySelect").addClass("hidden");
+    $("#stateSelect").addClass("hidden");
+    $("#citySelect").addClass("hidden");
+    $("#holeName").addClass("hidden");
+    $("#cityName").addClass("hidden");
+    $("#stateName").addClass("hidden");
+    $("#countryName").addClass("hidden");
+    $("#courseName").addClass("hidden");
     $("#submitBtn").addClass("hidden");
 }
 
