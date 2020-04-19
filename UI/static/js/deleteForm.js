@@ -4,7 +4,6 @@ function createEventListeners() {
     document.getElementById("AddFormControlSelect").addEventListener("change", chooseMainInputs);
     document.getElementById("courseSelect").addEventListener("change", chooseMainInputs);
     document.getElementById("holeSelect").addEventListener("change", chooseMainInputs);
-    document.getElementById("parSelect").addEventListener("change", chooseMainInputs);
     document.getElementById("teeSelect").addEventListener("change", chooseMainInputs);
     document.getElementById("countrySelect").addEventListener("change", chooseMainInputs);
     document.getElementById("stateSelect").addEventListener("change", chooseMainInputs);
@@ -15,7 +14,6 @@ function chooseMainInputs() {
     if ($("select#AddFormControlSelect").val() != "choose")
     {
         showCourses();
-        showCountryInput();
         showCountries();
     }
     else {
@@ -27,12 +25,12 @@ function chooseMainInputs() {
 
 function showCourses() {
     switch($("select#AddFormControlSelect").val()) {
-        case "tee":
         case "hole":
-        case "default18":
-            $("#courseSelect").removeClass("hidden");
-            break;
+        case "combo":
         case "course":
+            $("#courseSelect").removeClass("hidden");
+            showHoles();
+            break;
         case "city":
         case "state":
         case "country":
@@ -44,16 +42,13 @@ function showCourses() {
             hideAll();
             break;
     }
-
-    showSumbit();
-    showHoles();
 }
 
 
 function showHoles() {
     let mainSelect = $("select#AddFormControlSelect").val();
 
-    if (mainSelect == "tee" || mainSelect == "hole") {
+    if (mainSelect == "hole") {
         if ($("#courseInputSelect").val() != "choose") {
             $("#holeSelect").removeClass("hidden");
         }
@@ -67,27 +62,6 @@ function showHoles() {
         $("#holeSelect").addClass("hidden");
     }
 
-    showPars();
-}
-
-
-function showPars() {
-    let mainSelect = $("select#AddFormControlSelect").val();
-
-    if (mainSelect == "tee" || mainSelect == "hole") {
-        if ($("#holeInputSelect").val() != "choose") {
-            $("#parSelect").removeClass("hidden");
-        }
-        else {
-            $("#parInputSelect").val("choose");
-            $("#parSelect").addClass("hidden");
-        }
-    }
-    else {
-        $("#parInputSelect").val("choose");
-        $("#parSelect").addClass("hidden");
-    }
-
     showTees();
 }
 
@@ -95,16 +69,7 @@ function showPars() {
 function showTees() {
     let mainSelect = $("select#AddFormControlSelect").val();
 
-    if (mainSelect == "tee") {
-        if ($("#parInputSelect").val() != "choose") {
-            $("#teeSelect").removeClass("hidden");
-        }
-        else {
-            $("#teeInputSelect").val("choose");
-            $("#teeSelect").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "hole") {
+    if (mainSelect == "combo") {
         if ($("#holeInputSelect").val() != "choose") {
             $("#teeSelect").removeClass("hidden");
         }
@@ -118,57 +83,7 @@ function showTees() {
         $("#teeSelect").addClass("hidden");
     }
 
-    showDistanceInput();
-}
-
-
-function showDistanceInput() {
-    let mainSelect = $("select#AddFormControlSelect").val();
-
-    if (mainSelect == "tee") {
-        if ($("#teeInputSelect").val() != "choose") {
-            $("#distance").removeClass("hidden");
-        }
-        else {
-            $("#inputDistance").val("");
-            $("#distance").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "hole") {
-        if ($("#holeInputSelect").val() != "choose") {
-            $("#distance").removeClass("hidden");
-        }
-        else {
-            $("#inputDistance").val("");
-            $("#distance").addClass("hidden");
-        }
-    }
-    else {
-        $("#inputDistance").val("");
-        $("#distance").addClass("hidden");
-    }
-
-    showHoleInput();
     showSumbit();
-}
-
-
-function showHoleInput() {
-    let mainSelect = $("select#AddFormControlSelect").val();
-
-    if (mainSelect == "hole") {
-        if ($("#holeInputSelect").val() != "choose") {
-            $("holeName").removeClass("hidden");
-        }
-        else {
-            $("InputholeName").val("");
-            $("holeName").addClass("hidden");
-        }
-    }
-    else {
-        $("InputholeName").val("");
-        $("holeName").addClass("hidden");
-    }
 }
 
 
