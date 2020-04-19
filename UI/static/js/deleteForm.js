@@ -11,7 +11,7 @@ function createEventListeners() {
 }
 
 function chooseMainInputs() {
-    if ($("select#AddFormControlSelect").val() != "choose")
+    if ($("select#deleteFormControlSelect").val() != "choose")
     {
         showCourses();
         showCountries();
@@ -24,7 +24,7 @@ function chooseMainInputs() {
 
 
 function showCourses() {
-    switch($("select#AddFormControlSelect").val()) {
+    switch($("select#deleteFormControlSelect").val()) {
         case "hole":
         case "combo":
         case "course":
@@ -46,7 +46,7 @@ function showCourses() {
 
 
 function showHoles() {
-    let mainSelect = $("select#AddFormControlSelect").val();
+    let mainSelect = $("select#deleteFormControlSelect").val();
 
     if (mainSelect == "hole") {
         if ($("#courseInputSelect").val() != "choose") {
@@ -67,7 +67,7 @@ function showHoles() {
 
 
 function showTees() {
-    let mainSelect = $("select#AddFormControlSelect").val();
+    let mainSelect = $("select#deleteFormControlSelect").val();
 
     if (mainSelect == "combo") {
         if ($("#holeInputSelect").val() != "choose") {
@@ -88,7 +88,7 @@ function showTees() {
 
 
 function showCountries() {
-    let mainSelect = $("select#AddFormControlSelect").val();
+    let mainSelect = $("select#deleteFormControlSelect").val();
 
     switch(mainSelect) {
         case "city":
@@ -119,7 +119,7 @@ function showCountries() {
 
 
 function showStates() {
-    let mainSelect = $("select#AddFormControlSelect").val();
+    let mainSelect = $("select#deleteFormControlSelect").val();
 
     if (mainSelect == "city" || mainSelect == "state") {
         if ($("#countryInputSelect").val() != "choose") {
@@ -154,7 +154,7 @@ function showStates() {
 
 
 function showCities() {
-    let mainSelect = $("select#AddFormControlSelect").val();
+    let mainSelect = $("select#deleteFormControlSelect").val();
 
     if (mainSelect == "city") {
         if ($("#stateInputSelect").val() != "choose") {
@@ -181,7 +181,7 @@ function showCities() {
 
 
 function showSumbit() {
-    let mainSelect = $("select#AddFormControlSelect").val();
+    let mainSelect = $("select#deleteFormControlSelect").val();
 
     if (mainSelect == "choose") {
         resetSelects();
