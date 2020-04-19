@@ -33,6 +33,7 @@ cursor = conn.cursor()
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Add:</label>
                 <select class="form-control" id="exampleFormControlSelect1">
+                    <option value="choose" selected>Choose...</option>
                     <option value="tee">New Tee to a hole</option>
                     <option value="hole">New Hole to a Course</option>
                     <option value="default18">18 Default Holes to a Course</option>
@@ -42,7 +43,7 @@ cursor = conn.cursor()
                     <option value="country">New Country</option>
                 </select>
             </div>
-            <div id="courseSelect" class="form-group">
+            <div id="courseSelect" class="form-group hidden">
                 <label for="courseInputSelect">Select Course:</label>
                 <select class="form-control" id="courseInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -52,7 +53,7 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="holeSelect" class="form-group">
+            <div id="holeSelect" class="form-group hidden">
                 <label for="holeInputSelect">Select Hole:</label>
                 <select class="form-control" id="holeInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -62,8 +63,8 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="parSelect" class="form-group">
-                <label for="parInputSelect">Select Hole:</label>
+            <div id="parSelect" class="form-group hidden">
+                <label for="parInputSelect">Select Par:</label>
                 <select class="form-control" id="parInputSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT par, parID FROM Pars ORDER BY par")
@@ -72,17 +73,17 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="teeSelect" class="form-group">
-                <label for="teeInputSelect">Select Hole:</label>
+            <div id="teeSelect" class="form-group hidden">
+                <label for="teeInputSelect">Select Tee:</label>
                 <select class="form-control" id="teeInputSelect">
                     <option value="choose" selected>Choose...</option>
-                    % cursor.execute("SELECT teeName, teeID FROM Pars ORDER BY teeName")
+                    % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
                     % for tee in cursor:
                         <option value={{tee[1]}}>{{tee[0]}}</option>
                     % end
                 </select>
             </div>
-            <div id="countrySelect" class="form-group">
+            <div id="countrySelect" class="form-group hidden">
                 <label for="countryInputSelect">Select Country:</label>
                 <select class="form-control" id="countryInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -92,7 +93,7 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="stateSelect" class="form-group">
+            <div id="stateSelect" class="form-group hidden">
                 <label for="stateInputSelect">Select State/Province:</label>
                 <select class="form-control" id="stateInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -102,7 +103,7 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="citySelect" class="form-group">
+            <div id="citySelect" class="form-group hidden">
                 <label for="cityInputSelect">Select City:</label>
                 <select class="form-control" id="cityInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -112,27 +113,27 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="teeName" class="form-group">
+            <div id="teeName" class="form-group hidden">
                 <label for="inputTeeName">Tee Name</label>
                 <input type="text" class="form-control" id="inputTeeName">
             </div>
-            <div id="holeName" class="form-group">
+            <div id="holeName" class="form-group hidden">
                 <label for="inputHoleName">Hole Name*</label>
                 <input type="text" class="form-control" id="inputHoleName">
             </div>
-            <div id="cityName" class="form-group">
+            <div id="cityName" class="form-group hidden">
                 <label for="inputCityName">City Name</label>
                 <input type="text" class="form-control" id="inputCityName">
             </div>
-            <div id="stateName" class="form-group">
+            <div id="stateName" class="form-group hidden">
                 <label for="inputStateName">State Name</label>
                 <input type="text" class="form-control" id="inputStateName">
             </div>
-            <div id="countryName" class="form-group">
+            <div id="countryName" class="form-group hidden">
                 <label for="inputCountryName">Country Name</label>
                 <input type="text" class="form-control" id="inputCountryName">
             </div>
-            <div id="courseName" class="form-group">
+            <div id="courseName" class="form-group hidden">
                 <label for="inputCourseName">Course Name</label>
                 <input type="text" class="form-control" id="inputCourseName">
             </div>
