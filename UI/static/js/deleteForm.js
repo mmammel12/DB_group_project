@@ -178,13 +178,13 @@ function showCountries() {
     switch(mainSelect) {
         case "city":
         case "state":
-        case "course":
-            $("#countrySelect").removeClass("hidden");
-            break;
-        case "tee":
-        case "hole":
-        case "default18":
         case "country":
+            $("#countrySelect").removeClass("hidden");
+            showStates();
+            break;
+        case "combo":
+        case "hole":
+        case "course":
             $("#countryInputSelect").val("choose");
             $("#countrySelect").addClass("hidden");
             break;
@@ -194,29 +194,19 @@ function showCountries() {
             break;
     }
 
-    showStates();
-    showStateInput();
-}
-
-function showCountryInput() {
-    let mainSelect = $("select#AddFormControlSelect").val();
-
-    if (mainSelect == "country") {
-        $("#countryName").removeClass("hidden");
+    if (mainSelect == "course") {
+        $("#countryWarning").removeClass("hidden");
     }
     else {
-        $("#inputCountryName").val("");
-        $("#countryName").addClass("hidden");
+        $("#countryWarning").addClass("hidden");
     }
-    
-    showSumbit();
 }
 
 
 function showStates() {
     let mainSelect = $("select#AddFormControlSelect").val();
 
-    if (mainSelect == "city" || mainSelect == "course") {
+    if (mainSelect == "city" || mainSelect == "state") {
         if ($("#countryInputSelect").val() != "choose") {
             $("#stateInputSelect > option").each(function() {
                 if (this.id == $("#countryInputSelect").val()) {
@@ -226,6 +216,12 @@ function showStates() {
                     $(this).addClass("hidden");
                 }
             });
+            if (mainSelect == "state") {
+                $("#stateWarning").removeClass("hidden");
+            }
+            else {
+                $("#stateWarning").addClass("hidden");
+            }
             $("#stateSelect").removeClass("hidden");
         }
         else {
@@ -239,34 +235,13 @@ function showStates() {
     }
     
     showCities();
-    showCityInput();
-}
-
-function showStateInput() {
-    let mainSelect = $("select#AddFormControlSelect").val();
-
-    if (mainSelect == "state") {
-        if ($("#countryInputSelect").val() != "choose") {
-            $("#stateName").removeClass("hidden");
-        }
-        else {
-            $("#inputStateName").val("");
-            $("#stateName").addClass("hidden");
-        }
-    }
-    else {
-        $("#inputStateName").val("");
-        $("#stateName").addClass("hidden");
-    }
-
-    showSumbit();
 }
 
 
 function showCities() {
     let mainSelect = $("select#AddFormControlSelect").val();
 
-    if (mainSelect == "course") {
+    if (mainSelect == "city") {
         if ($("#stateInputSelect").val() != "choose") {
             $("#cityInputSelect > option").each(function() {
                 if (this.id == $("#stateInputSelect").val()) {
@@ -276,54 +251,14 @@ function showCities() {
                     $(this).addClass("hidden");
                 }
             });
+            $("#cityWarning").removeClass("hidden");
             $("#citySelect").removeClass("hidden");
         }
     }
     else {
+        $("#cityWarning").addClass("hidden");
         $("#cityInputSelect").val("choose");
         $("#citySelect").addClass("hidden");
-    }
-
-    showCourseInput();
-}
-
-
-function showCityInput() {
-    let mainSelect = $("select#AddFormControlSelect").val();
-
-    if (mainSelect == "city") {
-        if ($("#stateInputSelect").val() != "choose") {
-            $("#cityName").removeClass("hidden");
-        }
-        else {
-            $("#cityName").val("");
-            $("#cityName").addClass("hidden");
-        }
-    }
-    else {
-        $("#cityName").val("");
-        $("#cityName").addClass("hidden");
-    }
-
-    showSumbit();
-}
-
-
-function showCourseInput() {
-    let mainSelect = $("select#AddFormControlSelect").val();
-
-    if (mainSelect == "course") {
-        if ($("#cityInputSelect").val() != "choose") {
-            $("#courseName").removeClass("hidden");
-        }
-        else {
-            $("#inputCourseName").val("");
-            $("#courseName").addClass("hidden");
-        }
-    }
-    else {
-        $("#inputCourseName").val("");
-        $("#courseName").addClass("hidden");
     }
 
     showSumbit();
@@ -333,60 +268,7 @@ function showCourseInput() {
 function showSumbit() {
     let mainSelect = $("select#AddFormControlSelect").val();
 
-    if (mainSelect == "tee") {
-        if ($("#teeInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "hole") {
-        if ($("#holeInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "default18") {
-        if ($("#courseInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "course") {
-        if ($("#cityInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "city") {
-        if ($("#stateInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "state") {
-        if ($("#countryInputSelect").val() != "choose") {
-            $("#submitBtn").removeClass("hidden");
-        }
-        else {
-            $("#submitBtn").addClass("hidden");
-        }
-    }
-    else if (mainSelect == "country") {
-        $("#submitBtn").removeClass("hidden");
-    }
-    else {
-        $("#submitBtn").addClass("hidden");
-    }
+    
 }
 
 
