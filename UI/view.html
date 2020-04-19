@@ -19,6 +19,7 @@ cursor = conn.cursor()
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="/static/js/view.js"></script>
     <title>View</title>
 </head>
 <body>
@@ -29,37 +30,63 @@ cursor = conn.cursor()
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
     <div class="container-fluid mx-3 mt-3">
-        <form class="col-6">
+        <form   class="col-6"
+                action="/viewResult"
+                method="post"
+                enctype="multipart/form-data">
             <div class="form-group">
                 <label for="ViewFormControlSelect">View:</label>
                 <select class="form-control" id="ViewFormControlSelect">
-                    <option>All Locations</option>
-                    <option>All Courses</option>
-                    <option>All Holes on a Course</option>
-                    <option>All Courses in a City</option>
-                    <option>All Courses in a State/Province</option>
-                    <option>All Courses in a Country</option>
+                    <option value="choose" selected>Choose...</option>
+                    <option value="locs">All Locations</option>
+                    <option value="courses">All Courses</option>
+                    <option value="holes">All Holes on a Course</option>
+                    <option value="city">All Courses in a City</option>
+                    <option value="state">All Courses in a State/Province</option>
+                    <option value="country">All Courses in a Country</option>
                 </select>
             </div>
-            <div id="holes" class="form-group hidden">
-                <label for="HolesInputCourseSelect">Select Course:</label>
-                <select class="form-control" id="HolesInputCourseSelect">
-                    % cursor.execute("SELECT courseName FROM Courses ORDER BY courseName")
+            <div id="courseInput" class="form-group hidden">
+                <label for="courseInputSelect">Select Course:</label>
+                <select class="form-control" id="courseInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT courseName, courseID FROM Courses ORDER BY courseName")
                     % for course in cursor:
-                        <option>{{course[0]}}</option>
+                        <option value={{course[1]}}>{{course[0]}}</option>
                     % end
                 </select>
             </div>
-            <div id="courseCity" class="form-group hidden">
-
+            <div id="countryInput" class="form-group hidden">
+                <label for="countryInputSelect">Select Country:</label>
+                <select class="form-control" id="countryInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT countryName, countryID FROM countries ORDER BY countryName")
+                    % for country in cursor:
+                        <option value={{country[1]}}>{{country[0]}}</option>
+                    % end
+                </select>
             </div>
-            <div id="courseState" class="form-group hidden">
-
+            <div id="stateInput" class="form-group hidden">
+                <label for="stateInputSelect">Select State/Province:</label>
+                <select class="form-control" id="stateInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT stateProvName, stateProvID, countryID FROM statesProvs ORDER BY stateProvName")
+                    % for state in cursor:
+                        <option value={{state[1]}} id={{state[2]}} class="hidden">{{state[0]}}</option>
+                    % end
+                </select>
             </div>
-            <div id="courseCountry" class="form-group hidden">
-
+            <div id="cityInput" class="form-group hidden">
+                <label for="cityInputSelect">Select City:</label>
+                <select class="form-control" id="cityInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT cityName, cityID, stateProvID FROM Cities ORDER BY cityName")
+                    % for city in cursor:
+                        <option value={{city[1]}} id={{city[2]}} class="hidden">{{city[0]}}</option>
+                    % end
+                </select>
             </div>
-            <button type="submit" class="btn btn-primary hidden">Submit</button>
+            <button type="submit" class="btn btn-primary hidden" id="submitBtn">Submit</button>
         </form>
     </div>
 </body>
