@@ -183,7 +183,40 @@ function showCities() {
 function showSumbit() {
     let mainSelect = $("select#AddFormControlSelect").val();
 
-    
+    if (mainSelect == "choose") {
+        resetSelects();
+        hideAll();
+    }
+    else if (mainSelect == "hole") {
+        if ($("#holeInputSelect").val() != "choose") {
+            $("#submitBtn").removeClass("hidden");
+        }
+    }
+    else if (mainSelect == "combo") {
+        if ($("#teeInputSelect").val() != "choose") {
+            $("#submitBtn").removeClass("hidden");
+        }
+    }
+    else if (mainSelect == "course") {
+        if ($("#courseInputSelect").val() != "choose") {
+            $("#submitBtn").removeClass("hidden");
+        }
+    }
+    else if (mainSelect == "city") {
+        if ($("#cityInputSelect").val() != "choose") {
+            $("#submitBtn").removeClass("hidden");
+        }
+    }
+    else if (mainSelect == "state") {
+        if ($("#stateInputSelect").val() != "choose") {
+            $("#submitBtn").removeClass("hidden");
+        }
+    }
+    else if (mainSelect == "country") {
+        if ($("#countryInputSelect").val() != "choose") {
+            $("#submitBtn").removeClass("hidden");
+        }
+    }
 }
 
 
