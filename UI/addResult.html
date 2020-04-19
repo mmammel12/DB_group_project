@@ -16,7 +16,7 @@ stateProvID = request.forms.get("stateSelectValue")
 cityID = request.forms.get("citySelectValue")
 parID = request.forms.get("parSelectValue")
 teeID = request.forms.get("teeSelectValue")
-distance = request.forms.get("DistanceValue")
+distance = int(request.forms.get("DistanceValue"))
 holeNum = request.forms.get("holeSelectValue")
 holeName = request.forms.get("holeNameValue")
 cityName = request.forms.get("cityNameValue")
@@ -27,21 +27,28 @@ courseName = request.forms.get("courseNameValue")
 addSuccess = ""
 addFail = "hidden"
 
+if (not distance):
+    distance = 1
+
 try:
     if (mainSelect == "tee"):
-
+        cursor.execute("select holeID from holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
+        for row in cursor:
+            holeID = row[0]
+        cursor.execute("{CALL new_HoleTeePar (?,?,?,?)}", int(holeID), int(teeID), int(parID), distance)
     elif (mainSelect == "hole"):
-
+        cursor.execute("{CALL new_Hole (?,?,?,?,?,?)", int(courseID), int(holeNum), holeName, int(teeID), int(parID), distance)
     elif (mainSelect == "default18"):
-
+        for i in range(1,19):
+            cursor.execute("insert into Holes (CourseID, HoleNum) values (?,?)", int(courseID), i)
     elif (mainSelect == "course"):
-
+        cursor.execute("{CALL new_Course (?,?,?)", int(cityID), courseName, "")
     elif (mainSelect == "city"):
-
+        cursor.execute("insert into Cities (CityName, StateProvID) values (?,?)", cityName, int(stateProvID))
     elif (mainSelect == "state"):
-
+        cursor.execute("{CALL new_StateProv (?,?)}", stateName, int(countryID))
     elif (mainSelect == "country"):
-
+        cursor.execute("{CALL new_Country (?)}", countryName)
     else:
         addSuccess = "hidden"
         addFail = ""
