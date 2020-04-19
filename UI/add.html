@@ -30,7 +30,10 @@ cursor = conn.cursor()
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
     <div class="container-fluid mx-3 mt-3">
-        <form class="col-6">
+        <form   class="col-6"
+                action="/addResult"
+                method="post"
+                enctype="multipart/form-data">
             <div class="form-group">
                 <label for="AddFormControlSelect">Add:</label>
                 <select class="form-control" id="AddFormControlSelect">
