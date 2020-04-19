@@ -26,7 +26,7 @@ def viewResult():
     return template("viewResult.html")
 
 
-@post("/add")
+@route("/add")
 def addForm():
     return template("add.html")
 
