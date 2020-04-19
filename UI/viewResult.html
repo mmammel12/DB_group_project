@@ -21,6 +21,7 @@ showHolesTable = "hidden"
 showCityTable = "hidden"
 showStateTable = "hidden"
 showCountryTable = "hidden"
+fail = "hidden"
 
 course = ""
 
@@ -82,6 +83,7 @@ elif (mainSelect == "country"):
     cursor.execute("{CALL get_CountryCourses (?)}", int(countryID))
 else:
     cursor = False
+    fail = ""
 end
 %>
 
@@ -230,6 +232,12 @@ end
             % end
             </tbody>
         </table>
+        <div class="alert alert-danger {{fail}}" role="alert">
+            <h4 class="alert-heading">Something went wrong :(</h4>
+            <p>An error occurred while processing your query</p>
+            <hr>
+            <p class="mb-0">Please return to <a href="/view" class="alert-link">View data</a> and try again.</p>
+          </div>
     </div>
 </body>
 </html>
