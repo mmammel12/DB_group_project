@@ -64,7 +64,7 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="parSelect" class="form-group hidden">
-                <label for="parInputSelect">Select Par*:</label>
+                <label for="parInputSelect">Select Par (optional):</label>
                 <select class="form-control" id="parInputSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT par, parID FROM Pars ORDER BY par")
@@ -74,7 +74,7 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="teeSelect" class="form-group hidden">
-                <label for="teeInputSelect">Select Tee*:</label>
+                <label for="teeInputSelect">Select Tee (optional):</label>
                 <select class="form-control" id="teeInputSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
@@ -124,7 +124,7 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="holeName" class="form-group hidden">
-                <label for="inputHoleName">Hole Name*</label>
+                <label for="inputHoleName">Hole Name (optional)</label>
                 <input type="text" class="form-control" id="inputHoleName">
             </div>
             <div id="cityName" class="form-group hidden">
