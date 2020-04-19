@@ -1,3 +1,57 @@
+<%
+import pyodbc
+from bottle import request
+
+server = 'IN-CSCI-MSSQL.ADS.IU.EDU\\SQLSERV2017DEV2' 
+database = 'Group7' 
+username = '18Mam18' 
+password = 'Venwiv5-CSCI44300' 
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+cursor = conn.cursor()
+
+mainSelect = request.forms.get("mainSelect")
+courseID = request.forms.get("courseSelectValue")
+countryID = request.forms.get("countrySelectValule")
+stateProvID = request.forms.get("stateSelectValue")
+cityID = request.forms.get("citySelectValue")
+parID = request.forms.get("parSelectValue")
+teeID = request.forms.get("teeSelectValue")
+distance = request.forms.get("DistanceValue")
+holeNum = request.forms.get("holeSelectValue")
+holeName = request.forms.get("holeNameValue")
+cityName = request.forms.get("cityNameValue")
+stateName = request.forms.get("stateNameValue")
+countryName = request.forms.get("countryNameValue")
+courseName = request.forms.get("courseNameValue")
+
+addSuccess = ""
+addFail = "hidden"
+
+try:
+    if (mainSelect == "tee"):
+
+    elif (mainSelect == "hole"):
+
+    elif (mainSelect == "default18"):
+
+    elif (mainSelect == "course"):
+
+    elif (mainSelect == "city"):
+
+    elif (mainSelect == "state"):
+
+    elif (mainSelect == "country"):
+
+    else:
+        addSuccess = "hidden"
+        addFail = ""
+except:
+    addSuccess = "hidden"
+    addFail = ""
+end
+
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,5 +71,17 @@
         <a class="navbar-brand" href="/add">Add Data</a>
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
+    <div class="alert alert-success {{addSuccess}}" role="alert">
+        <h4 class="alert-heading">Data Entry Complete</h4>
+        <p>Good job, you didn't ruin everything.</p>
+        <hr>
+        <p class="mb-0">Now go <a href="/" class="alert-link">Home</a> and do something else</p>
+    </div>
+    <div class="alert alert-danger {{addFail}}" role="alert">
+            <h4 class="alert-heading">Something went wrong :(</h4>
+            <p>An error occurred while processing your query</p>
+            <hr>
+            <p class="mb-0">Please return to <a href="/add" class="alert-link">Add Data</a> and try again.</p>
+        </div>
 </body>
 </html>

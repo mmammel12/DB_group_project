@@ -8,24 +8,8 @@ password = 'Venwiv5-CSCI44300'
 conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor = conn.cursor()
 
-start = time.time()
-cursor.execute('''
-    select
-        CityName,
-        StateProvName,
-        CountryName
-    from Cities, StatesProvs, Countries
-    where
-        Cities.StateProvID = StatesProvs.StateProvID AND
-        StatesProvs.CountryID = Countries.CountryID
-    order by
-        CountryName   desc,
-        StateProvName asc,
-        CityName      asc;'''
-    )
-end =  time.time()
-print(end-start)
+try:
+    cursor.execute('insert into StatesProvs (StateProvName, CountryID) values (?, ?)', "Test City", 5)
+except:
+    print("fail")
 
-
-# for row in cursor:
-#     print(row)
