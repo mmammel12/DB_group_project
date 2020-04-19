@@ -83,7 +83,7 @@ function showSumbit() {
 function showCourses() {
     switch($("select#ViewFormControlSelect").val()) {
         case "holes":
-            $("courseInput").removeClass("hidden");
+            $("#courseInput").removeClass("hidden");
             break;
         case "city":
         case "state":
@@ -131,6 +131,14 @@ function showStates() {
     if (mainSelect == "city" || mainSelect == "state") {
         if ($("select#countryInputSelect").val() != "choose") {
             $("#stateInput").removeClass("hidden");
+            $("#stateInputSelect > option").each(function() {
+                if (this.id == $("#countryInputSelect").val()) {
+                    $(this).removeClass("hidden");
+                }
+                else if (this.value != "choose") {
+                    $(this).addClass("hidden");
+                }
+            });
         }
         else {
             $("#stateInput").val("choose");
@@ -160,6 +168,14 @@ function showCities() {
         if ($("select#countryInputSelect").val() != "choose") {
             if ($("select#stateInputSelect").val() != "choose") {
                 $("#cityInput").removeClass("hidden");
+                $("#cityInputSelect > option").each(function() {
+                    if (this.id == $("#stateInputSelect").val()) {
+                        $(this).removeClass("hidden");
+                    }
+                    else if (this.value != "choose") {
+                        $(this).addClass("hidden");
+                    }
+                });
             }
             else {
                 $("#cityInput").val("choose");
