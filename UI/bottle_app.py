@@ -1,6 +1,5 @@
 from bottle import default_app, route, post, template, run, static_file
 
-
 @route("/static/css/<filename>")
 def css(filename):
     return static_file(filename, root="./static/css/")
@@ -25,12 +24,11 @@ def viewForm():
 def viewResult():
     return template("viewResult.html")
 
-
 @route("/add")
 def addForm():
     return template("add.html")
 
-@post("/editResult")
+@post("/addResult")
 def addResult():
     return template("addResult.html")
 
