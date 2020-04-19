@@ -36,7 +36,7 @@ cursor = conn.cursor()
                 enctype="multipart/form-data">
             <div class="form-group">
                 <label for="AddFormControlSelect">Add:</label>
-                <select class="form-control" id="AddFormControlSelect">
+                <select class="form-control" id="AddFormControlSelect" name="mainSelect">
                     <option value="choose" selected>Choose...</option>
                     <option value="tee">New Tee to a hole</option>
                     <option value="hole">New Hole to a Course</option>
@@ -49,7 +49,7 @@ cursor = conn.cursor()
             </div>
             <div id="courseSelect" class="form-group hidden">
                 <label for="courseInputSelect">Select Course:</label>
-                <select class="form-control" id="courseInputSelect">
+                <select class="form-control" id="courseInputSelect" name="courseSelectValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT courseName, courseID FROM Courses ORDER BY courseName")
                     % for course in cursor:
@@ -59,7 +59,7 @@ cursor = conn.cursor()
             </div>
             <div id="holeSelect" class="form-group hidden">
                 <label for="holeInputSelect">Select Hole:</label>
-                <select class="form-control" id="holeInputSelect">
+                <select class="form-control" id="holeInputSelect" name="holeSelectValue">
                     <option value="choose" selected>Choose...</option>
                     % for hole in range(1,19):
                         <option value={{hole}}>{{hole}}</option>
@@ -68,7 +68,7 @@ cursor = conn.cursor()
             </div>
             <div id="parSelect" class="form-group hidden">
                 <label for="parInputSelect">Select Par:</label>
-                <select class="form-control" id="parInputSelect">
+                <select class="form-control" id="parInputSelect" name="parSelectValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT par, parID FROM Pars ORDER BY par")
                     % for par in cursor:
@@ -78,7 +78,7 @@ cursor = conn.cursor()
             </div>
             <div id="teeSelect" class="form-group hidden">
                 <label for="teeInputSelect">Select Tee:</label>
-                <select class="form-control" id="teeInputSelect">
+                <select class="form-control" id="teeInputSelect" name="teeSelectValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
                     % for tee in cursor:
@@ -88,11 +88,11 @@ cursor = conn.cursor()
             </div>
             <div id="distance" class="form-group hidden">
                 <label for="inputDistance">Enter Distance:</label>
-                <input type="number" class="form-control" id="inputDistance" placeholder="Distance in Yards">
+                <input type="number" class="form-control" id="inputDistance" name="DistanceValue" placeholder="Distance in Yards">
             </div>
             <div id="countrySelect" class="form-group hidden">
                 <label for="countryInputSelect">Select Country:</label>
-                <select class="form-control" id="countryInputSelect">
+                <select class="form-control" id="countryInputSelect" name="countrySelectValule">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT countryName, countryID FROM countries ORDER BY countryName")
                     % for country in cursor:
@@ -102,7 +102,7 @@ cursor = conn.cursor()
             </div>
             <div id="stateSelect" class="form-group hidden">
                 <label for="stateInputSelect">Select State/Province:</label>
-                <select class="form-control" id="stateInputSelect">
+                <select class="form-control" id="stateInputSelect" name="stateSelectValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT stateProvName, stateProvID, countryID FROM statesProvs ORDER BY stateProvName")
                     % for state in cursor:
@@ -112,7 +112,7 @@ cursor = conn.cursor()
             </div>
             <div id="citySelect" class="form-group hidden">
                 <label for="cityInputSelect">Select City:</label>
-                <select class="form-control" id="cityInputSelect">
+                <select class="form-control" id="cityInputSelect" name="citySelectValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT cityName, cityID, stateProvID FROM Cities ORDER BY cityName")
                     % for city in cursor:
@@ -122,23 +122,23 @@ cursor = conn.cursor()
             </div>
             <div id="holeName" class="form-group hidden">
                 <label for="inputHoleName">Hole Name</label>
-                <input type="text" class="form-control" id="inputHoleName" placeholder="Optional">
+                <input type="text" class="form-control" id="inputHoleName" name="holeNameValue" placeholder="Optional">
             </div>
             <div id="cityName" class="form-group hidden">
                 <label for="inputCityName">City Name</label>
-                <input type="text" class="form-control" id="inputCityName">
+                <input type="text" class="form-control" id="inputCityName" name="cityNameValue">
             </div>
             <div id="stateName" class="form-group hidden">
                 <label for="inputStateName">State Name</label>
-                <input type="text" class="form-control" id="inputStateName">
+                <input type="text" class="form-control" id="inputStateName" name="stateNameValue">
             </div>
             <div id="countryName" class="form-group hidden">
                 <label for="inputCountryName">Country Name</label>
-                <input type="text" class="form-control" id="inputCountryName">
+                <input type="text" class="form-control" id="inputCountryName" name="countryNameValue">
             </div>
             <div id="courseName" class="form-group hidden">
                 <label for="inputCourseName">Course Name</label>
-                <input type="text" class="form-control" id="inputCourseName">
+                <input type="text" class="form-control" id="inputCourseName" name="courseNameValue">
             </div>
             <button type="submit" class="btn btn-secondary hidden" id="submitBtn">Submit</button>
         </form>
