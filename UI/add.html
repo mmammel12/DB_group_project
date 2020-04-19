@@ -31,8 +31,8 @@ cursor = conn.cursor()
     <div class="container-fluid mx-3 mt-3">
         <form class="col-6">
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Add:</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <label for="AddFormControlSelect">Add:</label>
+                <select class="form-control" id="AddFormControlSelect">
                     <option value="choose" selected>Choose...</option>
                     <option value="tee">New Tee to a hole</option>
                     <option value="hole">New Hole to a Course</option>
@@ -64,7 +64,7 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="parSelect" class="form-group hidden">
-                <label for="parInputSelect">Select Par (optional):</label>
+                <label for="parInputSelect">Select Par:</label>
                 <select class="form-control" id="parInputSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT par, parID FROM Pars ORDER BY par")
@@ -74,12 +74,12 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="teeSelect" class="form-group hidden">
-                <label for="teeInputSelect">Select Tee (optional):</label>
-                <select class="form-control" id="teeInputSelect">
+                <label for="cityInputSelect">Select Tee:</label>
+                <select class="form-control" id="TeeInputSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
                     % for tee in cursor:
-                        <option value={{tee[1]}}>{{tee[0]}}</option>
+                        <option value={{tee[1]}} class="hidden">{{tee[0]}}</option>
                     % end
                 </select>
             </div>
@@ -113,16 +113,6 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="teeSelect" class="form-group hidden">
-                <label for="cityInputSelect">Select Tee:</label>
-                <select class="form-control" id="TeeInputSelect">
-                    <option value="choose" selected>Choose...</option>
-                    % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
-                    % for tee in cursor:
-                        <option value={{tee[1]}} class="hidden">{{tee[0]}}</option>
-                    % end
-                </select>
-            </div>
             <div id="holeName" class="form-group hidden">
                 <label for="inputHoleName">Hole Name (optional)</label>
                 <input type="text" class="form-control" id="inputHoleName">
@@ -143,7 +133,7 @@ cursor = conn.cursor()
                 <label for="inputCourseName">Course Name</label>
                 <input type="text" class="form-control" id="inputCourseName">
             </div>
-            <button type="submit" class="btn btn-secondary">Submit</button>
+            <button type="submit" class="btn btn-secondary hidden" id="submitBtn">Submit</button>
         </form>
     </div>
 </body>
