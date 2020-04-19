@@ -1,3 +1,90 @@
+<%
+import pyodbc
+from bottle import request
+
+server = 'IN-CSCI-MSSQL.ADS.IU.EDU\\SQLSERV2017DEV2' 
+database = 'Group7' 
+username = '18Mam18' 
+password = 'Venwiv5-CSCI44300' 
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+cursor = conn.cursor()
+
+mainSelect = request.forms.get("mainSelect")
+courseID = request.forms.get("courseSelect")
+countryID = request.forms.get("countrySelect")
+stateProvID = request.forms.get("stateSelect")
+cityID = request.forms.get("citySelect")
+
+showLocationTable = "hidden"
+showCoursesTable = "hidden"
+showHolesTable = "hidden"
+showCityTable = "hidden"
+showStateTable = "hidden"
+showCountryTable = "hidden"
+
+course = ""
+
+if (mainSelect == "holes"):
+    cursor.execute("select courseName from Courses where courseID = ?", courseID)
+    for row in cursor:
+        course = row[0]
+    end
+end
+
+locations = '''
+    select
+        CityName,
+        StateProvName,
+        CountryName
+    from Cities, StatesProvs, Countries
+    where
+        Cities.StateProvID = StatesProvs.StateProvID AND
+        StatesProvs.CountryID = Countries.CountryID
+    order by
+        CountryName desc,
+        StateProvName asc,
+        CityName asc'''
+
+courses = '''
+        select
+            CourseName,
+            CityName,
+            StateProvName,
+            CountryName
+        from Courses, Cities, StatesProvs, Countries
+        where
+            Courses.CityID = Cities.CityID AND
+            Cities.StateProvID = StatesProvs.StateProvID AND
+            StatesProvs.CountryID = Countries.CountryID
+        order by
+            CountryName desc,
+            StateProvName asc,
+            CityName asc,
+            CourseName asc'''
+
+if (mainSelect == "locs"):
+    showLocationTable = ""
+    cursor.execute(locations)
+elif (mainSelect == "courses"):
+    showCoursesTable = ""
+    cursor.execute(courses)
+elif (mainSelect == "holes"):
+    showHolesTable = ""
+    cursor.execute("{CALL get_HoleTeePars (?)}", int(courseID))
+elif (mainSelect == "city"):
+    showCityTable = ""
+    cursor.execute("{CALL get_CityCourses (?)}", int(cityID))
+elif (mainSelect == "state"):
+    showStateTable = ""
+    cursor.execute("{CALL get_StateProvCourses (?)}", int(stateProvID))
+elif (mainSelect == "country"):
+    showCountryTable = ""
+    cursor.execute("{CALL get_CountryCourses (?)}", int(countryID))
+else:
+    cursor = False
+end
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +105,131 @@
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
     <div class="container-fluid">
-        
+        <table id="locationsTable" class="table table-striped {{showLocationTable}}">
+            <thead>
+                <tr>
+                    <th scope="col">City</th>
+                    <th scope="col">State/Province</th>
+                    <th scope="col">Country</th>
+                </tr>
+            </thead>
+            <tbody>
+            % if (mainSelect == "locs" and cursor):
+                % for row in cursor:
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                    </tr>
+                % end
+            % end
+            </tbody>
+        </table>
+        <table id="coursesTable" class="table table-striped {{showCoursesTable}}">
+            <thead>
+                <tr>
+                    <th scope="col">Course</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State/Province</th>
+                    <th scope="col">Country</th>
+                </tr>
+            </thead>
+            <tbody>
+            % if (mainSelect == "courses" and cursor):
+                % for row in cursor:
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                    </tr>
+                % end
+            % end
+            </tbody>
+        </table>
+        <label for="holesTable" id="holesTableLabel" class={{showHolesTable}}>All hole for {{course}}</label>
+        <table id="holesTable" class="table table-striped {{showHolesTable}}">
+            <thead>
+                <tr>
+                    <th scope="col">Hole</th>
+                    <th scope="col">Tee</th>
+                    <th scope="col">Par</th>
+                    <th scope="col">Distance</th>
+                </tr>
+            </thead>
+            <tbody>
+            % if (mainSelect == "holes" and cursor):
+                % for row in cursor:
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                    </tr>
+                % end
+            % end
+            </tbody>
+        </table>
+        <table id="cityTable" class="table table-striped {{showCityTable}}">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">City</th>
+                </tr>
+            </thead>
+            <tbody>
+            % if (mainSelect == "city" and cursor):
+                % for row in cursor:
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                    </tr>
+                % end
+            % end
+            </tbody>
+        </table>
+        <table id="stateTable" class="table table-striped {{showStateTable}}">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State/Province</th>
+                </tr>
+            </thead>
+            <tbody>
+            % if (mainSelect == "state" and cursor):
+                % for row in cursor:
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                    </tr>
+                % end
+            % end
+            </tbody>
+        </table>
+        <table id="countryTable" class="table table-striped {{showCountryTable}}">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State/Province</th>
+                    <th scope="col">Country</th>
+                </tr>
+            </thead>
+            <tbody>
+            % if (mainSelect == "country" and cursor):
+                % for row in cursor:
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                    </tr>
+                % end
+            % end
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

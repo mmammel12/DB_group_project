@@ -36,7 +36,7 @@ cursor = conn.cursor()
                 enctype="multipart/form-data">
             <div class="form-group">
                 <label for="ViewFormControlSelect">View:</label>
-                <select class="form-control" id="ViewFormControlSelect">
+                <select class="form-control" id="ViewFormControlSelect" name="mainSelect">
                     <option value="choose" selected>Choose...</option>
                     <option value="locs">All Locations</option>
                     <option value="courses">All Courses</option>
@@ -48,7 +48,7 @@ cursor = conn.cursor()
             </div>
             <div id="courseInput" class="form-group hidden">
                 <label for="courseInputSelect">Select Course:</label>
-                <select class="form-control" id="courseInputSelect">
+                <select class="form-control" id="courseInputSelect" name="courseSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT courseName, courseID FROM Courses ORDER BY courseName")
                     % for course in cursor:
@@ -58,7 +58,7 @@ cursor = conn.cursor()
             </div>
             <div id="countryInput" class="form-group hidden">
                 <label for="countryInputSelect">Select Country:</label>
-                <select class="form-control" id="countryInputSelect">
+                <select class="form-control" id="countryInputSelect" name="countrySelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT countryName, countryID FROM countries ORDER BY countryName")
                     % for country in cursor:
@@ -68,7 +68,7 @@ cursor = conn.cursor()
             </div>
             <div id="stateInput" class="form-group hidden">
                 <label for="stateInputSelect">Select State/Province:</label>
-                <select class="form-control" id="stateInputSelect">
+                <select class="form-control" id="stateInputSelect" name="stateSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT stateProvName, stateProvID, countryID FROM statesProvs ORDER BY stateProvName")
                     % for state in cursor:
@@ -78,7 +78,7 @@ cursor = conn.cursor()
             </div>
             <div id="cityInput" class="form-group hidden">
                 <label for="cityInputSelect">Select City:</label>
-                <select class="form-control" id="cityInputSelect">
+                <select class="form-control" id="cityInputSelect" name="citySelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT cityName, cityID, stateProvID FROM Cities ORDER BY cityName")
                     % for city in cursor:
@@ -91,3 +91,5 @@ cursor = conn.cursor()
     </div>
 </body>
 </html>
+% cursor.close()
+% end
