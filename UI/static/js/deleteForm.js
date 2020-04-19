@@ -1,7 +1,7 @@
 "use strict";
 
 function createEventListeners() {
-    document.getElementById("AddFormControlSelect").addEventListener("change", chooseMainInputs);
+    document.getElementById("deleteFormControlSelect").addEventListener("change", chooseMainInputs);
     document.getElementById("courseSelect").addEventListener("change", chooseMainInputs);
     document.getElementById("holeSelect").addEventListener("change", chooseMainInputs);
     document.getElementById("teeSelect").addEventListener("change", chooseMainInputs);
