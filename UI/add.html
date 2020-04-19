@@ -22,12 +22,83 @@
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Add:</label>
                 <select class="form-control" id="exampleFormControlSelect1">
-                    <option>New Tee to a hole</option>
-                    <option>New Hole to a Course</option>
-                    <option>New Course to a City</option>
-                    <option>New City to a State/Province</option>
-                    <option>New State/Province to a Country</option>
-                    <option>New Country</option>
+                    <option value="tee">New Tee to a hole</option>
+                    <option value="hole">New Hole to a Course</option>
+                    <option value="default18">18 Default Holes to a Course</option>
+                    <option value="course">New Course to a City</option>
+                    <option value="city">New City to a State/Province</option>
+                    <option value="state">New State/Province to a Country</option>
+                    <option value="country">New Country</option>
+                </select>
+            </div>
+            <div id="courseSelect" class="form-group">
+                <label for="courseInputSelect">Select Course:</label>
+                <select class="form-control" id="courseInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT courseName, courseID FROM Courses ORDER BY courseName")
+                    % for course in cursor:
+                        <option value={{course[1]}}>{{course[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="holeSelect" class="form-group">
+                <label for="holeInputSelect">Select Hole:</label>
+                <select class="form-control" id="holeInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT holeNum, holeID, courseID FROM Holes ORDER BY holeNum")
+                    % for hole in cursor:
+                        <option value={{hole[1]}} id={{hole[2]}}>{{hole[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="parSelect" class="form-group">
+                <label for="parInputSelect">Select Hole:</label>
+                <select class="form-control" id="parInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT par, parID FROM Pars ORDER BY par")
+                    % for par in cursor:
+                        <option value={{par[1]}}>{{par[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="teeSelect" class="form-group">
+                <label for="teeInputSelect">Select Hole:</label>
+                <select class="form-control" id="teeInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT teeName, teeID FROM Pars ORDER BY teeName")
+                    % for tee in cursor:
+                        <option value={{tee[1]}}>{{tee[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="countrySelect" class="form-group">
+                <label for="countryInputSelect">Select Country:</label>
+                <select class="form-control" id="countryInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT countryName, countryID FROM countries ORDER BY countryName")
+                    % for country in cursor:
+                        <option value={{country[1]}}>{{country[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="stateSelect" class="form-group">
+                <label for="stateInputSelect">Select State/Province:</label>
+                <select class="form-control" id="stateInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT stateProvName, stateProvID, countryID FROM statesProvs ORDER BY stateProvName")
+                    % for state in cursor:
+                        <option value={{state[1]}} id={{state[2]}} class="hidden">{{state[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="citySelect" class="form-group">
+                <label for="cityInputSelect">Select City:</label>
+                <select class="form-control" id="cityInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT cityName, cityID, stateProvID FROM Cities ORDER BY cityName")
+                    % for city in cursor:
+                        <option value={{city[1]}} id={{city[2]}} class="hidden">{{city[0]}}</option>
+                    % end
                 </select>
             </div>
             <button type="submit" class="btn btn-secondary">Submit</button>
