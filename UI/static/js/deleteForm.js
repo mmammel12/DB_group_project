@@ -48,7 +48,7 @@ function showCourses() {
 function showHoles() {
     let mainSelect = $("select#deleteFormControlSelect").val();
 
-    if (mainSelect == "hole") {
+    if (mainSelect == "hole" || mainSelect == "combo") {
         if ($("#courseInputSelect").val() != "choose") {
             $("#holeSelect").removeClass("hidden");
         }
@@ -92,8 +92,11 @@ function showCountries() {
 
     switch(mainSelect) {
         case "city":
+            $("#cityWarning").removeClass("hidden");
         case "state":
+            $("#stateWarning").removeClass("hidden");
         case "country":
+            $("#countryWarning").removeClass("hidden");
             $("#countrySelect").removeClass("hidden");
             showStates();
             break;
@@ -109,11 +112,22 @@ function showCountries() {
             break;
     }
 
-    if (mainSelect == "course") {
-        $("#countryWarning").removeClass("hidden");
+    if (mainSelect == "state") {
+        $("#countryWarning").addClass("hidden");
+        $("#cityWarning").addClass("hidden");
+    }
+    else if (mainSelect == "city") {
+        $("#countryWarning").addClass("hidden");
+        $("#stateWarning").addClass("hidden");
+    }
+    else if (mainSelect == "country") {
+        $("#stateWarning").addClass("hidden");
+        $("#cityWarning").addClass("hidden");
     }
     else {
         $("#countryWarning").addClass("hidden");
+        $("#stateWarning").addClass("hidden");
+        $("#cityWarning").addClass("hidden");
     }
 }
 
@@ -131,12 +145,6 @@ function showStates() {
                     $(this).addClass("hidden");
                 }
             });
-            if (mainSelect == "state") {
-                $("#stateWarning").removeClass("hidden");
-            }
-            else {
-                $("#stateWarning").addClass("hidden");
-            }
             $("#stateSelect").removeClass("hidden");
         }
         else {
@@ -166,12 +174,10 @@ function showCities() {
                     $(this).addClass("hidden");
                 }
             });
-            $("#cityWarning").removeClass("hidden");
             $("#citySelect").removeClass("hidden");
         }
     }
     else {
-        $("#cityWarning").addClass("hidden");
         $("#cityInputSelect").val("choose");
         $("#citySelect").addClass("hidden");
     }
@@ -216,6 +222,9 @@ function showSumbit() {
         if ($("#countryInputSelect").val() != "choose") {
             $("#submitBtn").removeClass("hidden");
         }
+    }
+    else {
+        $("#submitBtn").addClass("hidden");
     }
 }
 

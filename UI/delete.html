@@ -77,6 +77,14 @@ cursor = conn.cursor()
                     <label for="countryInputSelect">* Country can only be deleted if no States/Provinces exist for selected Country</label>
                     <br/>
                 </div>
+                <div id="cityWarning" class="hidden">
+                    <label for="countryInputSelect">* City can only be deleted if no Courses exist for selected City</label>
+                    <br/>
+                </div>
+                <div id="stateWarning" class="hidden">
+                    <label for="countryInputSelect">* State/Province can only be deleted if no Cities exist for selected State/Province</label>
+                    <br/>
+                </div>
                 <label for="countryInputSelect">Select Country:</label>
                 <select class="form-control" id="countryInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -87,10 +95,6 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="stateSelect" class="form-group hidden">
-                <div id="stateWarning" class="hidden">
-                    <label for="stateInputSelect">* State/Province can only be deleted if no Cities exist for selected State/Province</label>
-                    <br/>
-                </div>
                 <label for="stateInputSelect">Select State/Province:</label>
                 <select class="form-control" id="stateInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -101,10 +105,6 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="citySelect" class="form-group hidden">
-                <div id="cityWarning" class="hidden">
-                    <label for="cityInputSelect">* City can only be deleted if no Courses exist for selected City</label>
-                    <br/>
-                </div>
                 <label for="cityInputSelect">Select City:</label>
                 <select class="form-control" id="cityInputSelect">
                     <option value="choose" selected>Choose...</option>
@@ -114,7 +114,7 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <button type="submit" class="btn btn-danger hidden">Submit</button>
+            <button type="submit" id="submitBtn" class="btn btn-danger hidden">Submit</button>
         </form>
     </div>
 </body>
