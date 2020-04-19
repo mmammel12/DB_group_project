@@ -393,32 +393,19 @@ function showSumbit() {
 function resetSelects() {
     $("#courseInputSelect").val("choose");
     $("#holeInputSelect").val("choose");
-    $("#parInputSelect").val("choose");
     $("#teeInputSelect").val("choose");
     $("#countryInputSelect").val("choose");
     $("#stateInputSelect").val("choose");
     $("#cityInputSelect").val("choose");
-    $("#inputHoleName").val("");
-    $("#inputCityName").val("");
-    $("#inputStateName").val("");
-    $("#inputCountryName").val("");
-    $("#inputCourseName").val("");
-    $("#inputDistance").val("");
 }
 
 function hideAll() {
     $("#courseSelect").addClass("hidden");
     $("#holeSelect").addClass("hidden");
-    $("#parSelect").addClass("hidden");
     $("#teeSelect").addClass("hidden");
     $("#countrySelect").addClass("hidden");
     $("#stateSelect").addClass("hidden");
     $("#citySelect").addClass("hidden");
-    $("#holeName").addClass("hidden");
-    $("#cityName").addClass("hidden");
-    $("#stateName").addClass("hidden");
-    $("#countryName").addClass("hidden");
-    $("#courseName").addClass("hidden");
     $("#submitBtn").addClass("hidden");
 }
 
