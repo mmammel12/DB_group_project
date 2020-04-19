@@ -1,3 +1,14 @@
+<%
+import pyodbc
+
+server = 'IN-CSCI-MSSQL.ADS.IU.EDU\\SQLSERV2017DEV2' 
+database = 'Group7' 
+username = '18Mam18' 
+password = 'Venwiv5-CSCI44300' 
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+cursor = conn.cursor()
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +19,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="/static/js/deleteForm.js"></script>
     <title>Delete</title>
 </head>
 <body>
@@ -20,14 +32,86 @@
     <div class="container-fluid mx-3 mt-3">
         <form class="col-6">
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Delete:</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <label for="deleteFormControlSelect">Delete:</label>
+                <select class="form-control" id="deleteFormControlSelect">
+                    <option value="choose" selected>Choose...</option>
                     <option value="hole">Hole from a Course</option>
                     <option value="combo">Hole + Tee Combo from a Course</option>
                     <option value="course">Course</option>
                     <option value="city">City*</option>
                     <option value="state">State/Province*</option>
                     <option value="country">Country*</option>
+                </select>
+            </div>
+            <div id="courseSelect" class="form-group hidden">
+                <label for="courseInputSelect">Select Course:</label>
+                <select class="form-control" id="courseInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT courseName, courseID FROM Courses ORDER BY courseName")
+                    % for course in cursor:
+                        <option value={{course[1]}}>{{course[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="holeSelect" class="form-group hidden">
+                <label for="holeInputSelect">Select Hole:</label>
+                <select class="form-control" id="holeInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % for hole in range(1,19):
+                        <option value={{hole}}>{{hole}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="teeSelect" class="form-group hidden">
+                <label for="teeInputSelect">Select Tee:</label>
+                <select class="form-control" id="teeInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
+                    % for tee in cursor:
+                        <option value={{tee[1]}}>{{tee[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="countrySelect" class="form-group hidden">
+                <div id="countryWarning" class="hidden">
+                    <label for="countryInputSelect">* Country can only be deleted if no States/Provinces exist for selected Country</label>
+                    <br/>
+                </div>
+                <label for="countryInputSelect">Select Country:</label>
+                <select class="form-control" id="countryInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT countryName, countryID FROM countries ORDER BY countryName")
+                    % for country in cursor:
+                        <option value={{country[1]}}>{{country[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="stateSelect" class="form-group hidden">
+                <div id="stateWarning" class="hidden">
+                    <label for="stateInputSelect">* State/Province can only be deleted if no Cities exist for selected State/Province</label>
+                    <br/>
+                </div>
+                <label for="stateInputSelect">Select State/Province:</label>
+                <select class="form-control" id="stateInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT stateProvName, stateProvID, countryID FROM statesProvs ORDER BY stateProvName")
+                    % for state in cursor:
+                        <option value={{state[1]}} id={{state[2]}} class="">{{state[0]}}</option>
+                    % end
+                </select>
+            </div>
+            <div id="citySelect" class="form-group hidden">
+                <div id="cityWarning" class="hidden">
+                    <label for="cityInputSelect">* City can only be deleted if no Courses exist for selected City</label>
+                    <br/>
+                </div>
+                <label for="cityInputSelect">Select City:</label>
+                <select class="form-control" id="cityInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT cityName, cityID, stateProvID FROM Cities ORDER BY cityName")
+                    % for city in cursor:
+                        <option value={{city[1]}} id={{city[2]}} class="">{{city[0]}}</option>
+                    % end
                 </select>
             </div>
             <button type="submit" class="btn btn-danger hidden">Submit</button>
