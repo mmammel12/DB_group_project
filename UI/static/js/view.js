@@ -9,15 +9,15 @@ function createEventListeners() {
 }
 
 function chooseMainInputs() {
-    if ($("select#ViewFormControlSelect").val() == "choose")
+    if ($("select#ViewFormControlSelect").val() != "choose")
     {
-        resetSelects();
-        hideAll();
-    }
-    else {
         showSumbit();
         showCourses();
         showCountries();
+    }
+    else {
+        resetSelects();
+        hideAll();
     }
 }
 
@@ -90,7 +90,7 @@ function showCourses() {
         case "country":
         case "locs":
         case "courses":
-            $("#courseInput").val("choose");
+            $("#courseInputSelect").val("choose");
             $("#courseInput").addClass("hidden");
             break;
         case "choose":
@@ -107,7 +107,7 @@ function showCountries() {
         case "locs":
         case "courses":
         case "holes":
-            $("#countryInput").val("choose");
+            $("#countryInputSelect").val("choose");
             $("#countryInput").addClass("hidden");
             break;
         case "city":
@@ -141,7 +141,7 @@ function showStates() {
             });
         }
         else {
-            $("#stateInput").val("choose");
+            $("#stateInputSelect").val("choose");
             $("#stateInput").addClass("hidden");
         }
     }
@@ -150,7 +150,7 @@ function showStates() {
         hideAll();
     }
     else {
-        $("#stateInput").val("choose");
+        $("#stateInputSelect").val("choose");
         $("#stateInput").addClass("hidden");
     }
     
@@ -178,26 +178,26 @@ function showCities() {
                 });
             }
             else {
-                $("#cityInput").val("choose");
+                $("#cityInputSelect").val("choose");
                 $("#cityInput").addClass("hidden");
             }
         }
         else {
-            $("#cityInput").val("choose");
+            $("#cityInputSelect").val("choose");
             $("#cityInput").addClass("hidden");
         }
     }
     else {
-        $("#cityInput").val("choose");
+        $("#cityInputSelect").val("choose");
         $("#cityInput").addClass("hidden");
     }
 }
 
 function resetSelects() {
-    $("#courseInput").val("choose");
-    $("#countryInput").val("choose");
-    $("#stateInput").val("choose");
-    $("#cityInput").val("choose");
+    $("#courseInputSelect").val("choose");
+    $("#countryInputSelect").val("choose");
+    $("#stateInputSelect").val("choose");
+    $("#cityInputSelect").val("choose");
 }
 
 function hideAll() {
