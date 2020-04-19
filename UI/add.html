@@ -64,7 +64,7 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="parSelect" class="form-group hidden">
-                <label for="parInputSelect">Select Par:</label>
+                <label for="parInputSelect">Select Par*:</label>
                 <select class="form-control" id="parInputSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT par, parID FROM Pars ORDER BY par")
@@ -74,7 +74,7 @@ cursor = conn.cursor()
                 </select>
             </div>
             <div id="teeSelect" class="form-group hidden">
-                <label for="teeInputSelect">Select Tee:</label>
+                <label for="teeInputSelect">Select Tee*:</label>
                 <select class="form-control" id="teeInputSelect">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
@@ -113,9 +113,15 @@ cursor = conn.cursor()
                     % end
                 </select>
             </div>
-            <div id="teeName" class="form-group hidden">
-                <label for="inputTeeName">Tee Name</label>
-                <input type="text" class="form-control" id="inputTeeName">
+            <div id="teeSelect" class="form-group hidden">
+                <label for="cityInputSelect">Select Tee:</label>
+                <select class="form-control" id="TeeInputSelect">
+                    <option value="choose" selected>Choose...</option>
+                    % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
+                    % for tee in cursor:
+                        <option value={{tee[1]}} class="hidden">{{tee[0]}}</option>
+                    % end
+                </select>
             </div>
             <div id="holeName" class="form-group hidden">
                 <label for="inputHoleName">Hole Name*</label>
