@@ -33,41 +33,41 @@ else:
     distance = int(distance)
 end
 
-# try:
-if (mainSelect == "tee"):
-    cursor.execute("select holeID from holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
-    for row in cursor:
-        holeID = row[0]
+try:
+    if (mainSelect == "tee"):
+        cursor.execute("select holeID from holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
+        for row in cursor:
+            holeID = row[0]
+        end
+        params = (int(holeID), int(teeID), int(parID), distance)
+        cursor.execute("{CALL new_HoleTeePar (?,?,?,?)}", params)
+    elif (mainSelect == "hole"):
+        params = (int(courseID), int(holeNum), holeName, int(teeID), int(parID), distance)
+        cursor.execute("{CALL new_Hole (?,?,?,?,?,?)}", params)
+    elif (mainSelect == "default18"):
+        for i in range(1,19):
+            params = (int(courseID), i)
+            cursor.execute("insert into Holes (CourseID, HoleNum) values (?,?)", params)
+        end
+    elif (mainSelect == "course"):
+        params = (int(cityID), courseName, "")
+        cursor.execute("{CALL new_Course (?,?,?)}", params)
+    elif (mainSelect == "city"):
+        params = (cityName, int(stateProvID))
+        cursor.execute("{CALL new_City (?,?)}", params)
+    elif (mainSelect == "state"):
+        params = (stateName, int(countryID))
+        cursor.execute("{CALL new_StateProv (?,?)}", params)
+    elif (mainSelect == "country"):
+        params = (countryName,)
+        cursor.execute("{CALL new_Country (?)}", params)
+    else:
+        addSuccess = "hidden"
+        addFail = ""
     end
-    params = (int(holeID), int(teeID), int(parID), distance)
-    cursor.execute("{CALL new_HoleTeePar (?,?,?,?)}", params)
-elif (mainSelect == "hole"):
-    params = (int(courseID), int(holeNum), holeName, int(teeID), int(parID), distance)
-    cursor.execute("{CALL new_Hole (?,?,?,?,?,?)}", params)
-elif (mainSelect == "default18"):
-    for i in range(1,19):
-        params = (int(courseID), i)
-        cursor.execute("insert into Holes (CourseID, HoleNum) values (?,?)", params)
-    end
-elif (mainSelect == "course"):
-    params = (int(cityID), courseName, "")
-    cursor.execute("{CALL new_Course (?,?,?)}", params)
-elif (mainSelect == "city"):
-    params = (cityName, int(stateProvID))
-    cursor.execute("{CALL new_City (?,?)}", params)
-elif (mainSelect == "state"):
-    params = (stateName, int(countryID))
-    cursor.execute("{CALL new_StateProv (?,?)}", params)
-elif (mainSelect == "country"):
-    params = (countryName,)
-    cursor.execute("{CALL new_Country (?)}", params)
-else:
+except:
     addSuccess = "hidden"
     addFail = ""
-end
-# except:
-#     addSuccess = "hidden"
-#     addFail = ""
 end
 
 cursor.close()
