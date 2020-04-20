@@ -6,7 +6,7 @@ server = 'IN-CSCI-MSSQL.ADS.IU.EDU\\SQLSERV2017DEV2'
 database = 'Group7' 
 username = '18Mam18' 
 password = 'Venwiv5-CSCI44300' 
-conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password, autocommit=True)
 cursor = conn.cursor()
 
 mainSelect = request.forms.get("mainSelect")
@@ -70,6 +70,8 @@ end
 #     addFail = ""
 end
 
+cursor.close()
+
 %>
 
 <!DOCTYPE html>
@@ -91,13 +93,13 @@ end
         <a class="navbar-brand" href="/add">Add Data</a>
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
-    <div class="alert alert-success {{addSuccess}}" role="alert">
+    <div class="alert alert-success col-6 mx-3 mt-3 {{addSuccess}}" role="alert">
         <h4 class="alert-heading">Data Entry Complete</h4>
         <p>Good job, you didn't ruin everything.</p>
         <hr>
         <p class="mb-0">Now go <a href="/" class="alert-link">Home</a> and do something else</p>
     </div>
-    <div class="alert alert-danger {{addFail}}" role="alert">
+    <div class="alert alert-danger col-6 mx-3 mt-3 {{addFail}}" role="alert">
         <h4 class="alert-heading">Something went wrong:(</h4>
         <p>An error occurred while processing your query</p>
         <hr>
@@ -105,5 +107,3 @@ end
     </div>
 </body>
 </html>
-% cursor.close()
-% end
