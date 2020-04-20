@@ -36,7 +36,7 @@ cursor = conn.cursor()
                 enctype="multipart/form-data">
             <div class="form-group">
                 <label for="deleteFormControlSelect">Delete:</label>
-                <select class="form-control" id="deleteFormControlSelect">
+                <select class="form-control" id="deleteFormControlSelect" name="mainSelect">
                     <option value="choose" selected>Choose...</option>
                     <option value="hole">Hole from a Course</option>
                     <option value="combo">Hole + Tee Combo from a Course</option>
@@ -48,7 +48,7 @@ cursor = conn.cursor()
             </div>
             <div id="courseSelect" class="form-group hidden">
                 <label for="courseInputSelect">Select Course:</label>
-                <select class="form-control" id="courseInputSelect">
+                <select class="form-control" id="courseInputSelect" name="courseValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT courseName, courseID FROM Courses ORDER BY courseName")
                     % for course in cursor:
@@ -58,7 +58,7 @@ cursor = conn.cursor()
             </div>
             <div id="holeSelect" class="form-group hidden">
                 <label for="holeInputSelect">Select Hole:</label>
-                <select class="form-control" id="holeInputSelect">
+                <select class="form-control" id="holeInputSelect" name="holeValue">
                     <option value="choose" selected>Choose...</option>
                     % for hole in range(1,19):
                         <option value={{hole}}>{{hole}}</option>
@@ -67,7 +67,7 @@ cursor = conn.cursor()
             </div>
             <div id="teeSelect" class="form-group hidden">
                 <label for="teeInputSelect">Select Tee:</label>
-                <select class="form-control" id="teeInputSelect">
+                <select class="form-control" id="teeInputSelect" name="teeValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT teeName, teeID FROM Tees ORDER BY teeName")
                     % for tee in cursor:
@@ -89,7 +89,7 @@ cursor = conn.cursor()
                     <br/>
                 </div>
                 <label for="countryInputSelect">Select Country:</label>
-                <select class="form-control" id="countryInputSelect">
+                <select class="form-control" id="countryInputSelect" name="countryValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT countryName, countryID FROM countries ORDER BY countryName")
                     % for country in cursor:
@@ -99,7 +99,7 @@ cursor = conn.cursor()
             </div>
             <div id="stateSelect" class="form-group hidden">
                 <label for="stateInputSelect">Select State/Province:</label>
-                <select class="form-control" id="stateInputSelect">
+                <select class="form-control" id="stateInputSelect" name="stateValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT stateProvName, stateProvID, countryID FROM statesProvs ORDER BY stateProvName")
                     % for state in cursor:
@@ -109,7 +109,7 @@ cursor = conn.cursor()
             </div>
             <div id="citySelect" class="form-group hidden">
                 <label for="cityInputSelect">Select City:</label>
-                <select class="form-control" id="cityInputSelect">
+                <select class="form-control" id="cityInputSelect" name="cityValue">
                     <option value="choose" selected>Choose...</option>
                     % cursor.execute("SELECT cityName, cityID, stateProvID FROM Cities ORDER BY cityName")
                     % for city in cursor:
@@ -123,4 +123,5 @@ cursor = conn.cursor()
 </body>
 </html>
 % cursor.close()
+% conn.close()
 % end
