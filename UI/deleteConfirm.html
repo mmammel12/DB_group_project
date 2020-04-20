@@ -16,9 +16,86 @@ cityID = request.forms.get("cityValue")
 teeID = request.forms.get("teeValue")
 holeNum = request.forms.get("holeValue")
 
+holeID = ""
+
 deleteStr = ""
-fail = ""
-success = "hidden"
+success = ""
+fail = "hidden"
+regionFail = "hidden"
+region = ""
+
+if (mainSelect == "hole"):
+    cursor.execute("select holeID from Holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
+    row = cursor.fetchone()
+    holeID = row[0]
+    cursor.execute("select courseName from Courses where courseID = ?", int(courseID))
+    row = cursor.fetchone()
+    courseName = row[0]
+    deleteStr = "Hole number " + holeID + " on " + courseName
+elif (mainSelect == "combo"):
+    cursor.execute("select holeID from Holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
+    row = cursor.fetchone()
+    holeID = row[0]
+    cursor.execute("select * from HoleTees where holeID = ? and teeID = ?", int(holeID), int(teeID))
+    row = cursor.fetchone()
+    if (row != None):
+        cursor.execute("select courseName from Courses where courseID = ?", int(courseID))
+        row = cursor.fetchone()
+        courseName = row[0]
+        cursor.execute("select teeName from Tees where teeID = ?", int(teeID))
+        row = cursor.fetchone()
+        teeName = row[0]
+        deleteStr = "Hole number " + holeNum + " and Tee " + teeName + " on " + courseName
+    else:
+        success = "hidden"
+        fail = ""
+elif (mainSelect == "course"):
+    cursor.execute("select courseName from Courses where courseID = ?", int(courseID))
+    row = cursor.fetchone()
+    deleteStr = "The Course: " + row[0]
+elif (mainSelect == "city"):
+    cursor.execute("{CALL check_delete_city (?)}", int(cityID))
+    row = cursor.fetchone()
+    if (row != None):
+        regionFail = ""
+        region = "City"
+        success = "hidden"
+        fail = "hidden"
+    else:
+        cursor.execute("SELECT cityName from Cities where cityID = ?", int(cityID))
+        row = cursor.fetchone()
+        deleteStr = "The City: " + row[0]
+    end
+elif (mainSelect == "state"):
+    cursor.execute("{CALL check_delete_state (?)}", int(stateProvID))
+    row = cursor.fetchone()
+    if (row != None):
+        regionFail = ""
+        region = "State/Province"
+        success = "hidden"
+        fail = "hidden"
+    else:
+        cursor.execute("SELECT stateProvName from StatesProvs where stateProvID = ?", int(stateProvID))
+        row = cursor.fetchone()
+        deleteStr = "The State/Province: " + row[0]
+    end
+elif (mainSelect == "country"):
+    cursor.execute("{CALL check_delete_country (?)}", int(countryID))
+    row = cursor.fetchone()
+    if (row != None):
+        regionFail = ""
+        region = "Country"
+        success = "hidden"
+        fail = "hidden"
+    else:
+        cursor.execute("SELECT countryName from Countries where CountryID = ?", int(countryID))
+        row = cursor.fetchone()
+        deleteStr = "The Country: " + row[0]
+    end
+elif (mainSelect == "choose"):
+    success = "hidden"
+    fail = ""
+end
 
 cursor.close()
 conn.close()
@@ -52,15 +129,27 @@ conn.close()
             <hr>
             <p class="mb-0">This action cannot be undone. Please Confirm or Cancel.</p>
         </div>
-        <div class="alert alert-warning {{success}}" role="alert">
+        <div class="alert alert-warning {{fail}}" role="alert">
             An error occurred, please cancel and try again.
+        </div>
+        <div class="alert alert-danger {{regionFail}}" role="alert">
+            Error: A {{region}} can only be deleted if there are no courses that reference it
         </div>
         <form   class="col-6"
                 action="/deleteResult"
                 method="post"
                 enctype="multipart/form-data">
+            <div id="data" class="hidden">
+                <input type="text" name="mainSelect" value={{mainSelect}}>
+                <input type="text" name="courseID" value={{courseID}}>
+                <input type="text" name="countryID" value={{countryID}}>
+                <input type="text" name="stateProvID" value={{stateProvID}}>
+                <input type="text" name="cityID" value={{cityID}}>
+                <input type="text" name="teeID" value={{teeID}}>
+                <input type="text" name="holeID" value={{holeID}}>
+            </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-danger {{fail}}">Confirm Delete</button>
+                <button type="submit" class="btn btn-danger {{success}}">Confirm Delete</button>
                 <a href="/" class="btn btn-info px-5">Cancel</a>
             </div>
         </form>
