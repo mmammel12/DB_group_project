@@ -1,3 +1,40 @@
+<%
+import pyodbc
+from bottle import request
+
+server = 'IN-CSCI-MSSQL.ADS.IU.EDU\\SQLSERV2017DEV2' 
+database = 'Group7' 
+username = '18Mam18' 
+password = 'Venwiv5-CSCI44300' 
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password, autocommit=True)
+cursor = conn.cursor()
+
+mainSelect = request.forms.get("mainSelect")
+courseID = request.forms.get("courseID")
+countryID = request.forms.get("countryID")
+stateProvID = request.forms.get("stateProvID")
+cityID = request.forms.get("cityID")
+teeID = request.forms.get("teeID")
+holeID = request.forms.get("holeID")
+
+if (mainSelect == "hole"):
+    # todo
+elif (mainSelect == "combo"):
+    # todo
+elif (mainSelect == "course"):
+    # todo
+elif (mainSelect == "city"):
+    # todo
+elif (mainSelect == "state"):
+    # todo
+elif (mainSelect == "country"):
+    # todo
+elif (mainSelect == "choose"):
+    # todo
+end
+
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
