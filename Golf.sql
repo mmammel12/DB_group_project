@@ -238,3 +238,34 @@ begin
 		values       (@CityID, @CourseName, @Notes);
 end
 go
+
+--check if a country can be deleted
+go
+create procedure check_delete_country (@CountryID int) as
+begin
+	SELECT DISTINCT CourseName FROM Courses, Cities, StatesProvs, Countries
+	WHERE
+		Courses.CityID = Cities.CityID AND
+		Cities.StateProvID = StatesProvs.StateProvID AND
+		StatesProvs.CountryID = @CountryID;
+end
+go
+
+--check if a state can be deleted
+create procedure check_delete_state (@StateProvID int) as
+begin
+	SELECT DISTINCT CourseName FROM Courses, Cities, StatesProvs
+	WHERE
+		Courses.CityID = Cities.CityID AND
+		Cities.StateProvID = @StateProvID;
+end
+go
+
+--check if a city can be deleted
+create procedure check_delete_city (@CityID int) as
+begin
+	SELECT DISTINCT CourseName FROM Courses, Cities
+	WHERE
+		Courses.CityID = @CityID;
+end
+go
