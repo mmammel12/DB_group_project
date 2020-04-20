@@ -8,8 +8,7 @@ password = 'Venwiv5-CSCI44300'
 conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor = conn.cursor()
 
-try:
-    cursor.execute('insert into StatesProvs (StateProvName, CountryID) values (?, ?)', "Test City", 5)
-except:
-    print("fail")
+cursor.execute("SELECT countryName from Countries where CountryID = ?", 1)
 
+row = cursor.fetchone()
+print(row[0])
