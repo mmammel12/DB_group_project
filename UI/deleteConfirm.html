@@ -1,3 +1,29 @@
+<%
+import pyodbc
+
+server = 'IN-CSCI-MSSQL.ADS.IU.EDU\\SQLSERV2017DEV2' 
+database = 'Group7' 
+username = '18Mam18' 
+password = 'Venwiv5-CSCI44300' 
+conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+cursor = conn.cursor()
+
+mainSelect = request.forms.get("mainSelect")
+courseID = request.forms.get("courseValue")
+countryID = request.forms.get("countryValule")
+stateProvID = request.forms.get("stateValue")
+cityID = request.forms.get("cityValue")
+teeID = request.forms.get("teeValue")
+holeNum = request.forms.get("holeValue")
+
+deleteStr = ""
+fail = ""
+success = "hidden"
+
+cursor.close()
+conn.close()
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +44,26 @@
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
     <div class="container-fluid">
-        
+        <div class="alert alert-danger col-6 mx-3 mt-3 {{fail}}" role="alert">
+            <h4 class="alert-heading">Confirm Delete</h4>
+            <p>You are about to delete the follow item:</p>
+            <br/>
+            <p>{{deleteStr}}</p>
+            <hr>
+            <p class="mb-0">This action cannot be undone. Please Confirm or Cancel.</p>
+        </div>
+        <div class="alert alert-warning {{success}}" role="alert">
+            An error occurred, please cancel and try again.
+        </div>
+        <form   class="col-6"
+                action="/deleteResult"
+                method="post"
+                enctype="multipart/form-data">
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger {{fail}}">Confirm Delete</button>
+                <a href="/" class="btn btn-info px-5">Cancel</a>
+            </div>
+        </form>
     </div>
 </body>
 </html>
