@@ -18,19 +18,18 @@ teeID = request.forms.get("teeID")
 holeID = request.forms.get("holeID")
 
 if (mainSelect == "hole"):
-    # todo
+    cursor.execute("delete from HoleTees where holeID = ?", int(holeID))
+    cursor.execute("delete from Holes where holeID = ?", int(holeID))
 elif (mainSelect == "combo"):
-    # todo
+    cursor.execute("delete from HoleTees where holeID = ? and teeID = ?", int(holeID), int(teeID))
 elif (mainSelect == "course"):
-    # todo
+    cursor.execute("delete from Courses where courseID = ?", int(courseID))
 elif (mainSelect == "city"):
-    # todo
+    cursor.execute("delete from Cities where cityID = ?", int(cityID))
 elif (mainSelect == "state"):
-    # todo
+    cursor.execute("delete from StatesProvs where StateProvID = ?", int(stateProvID))
 elif (mainSelect == "country"):
-    # todo
-elif (mainSelect == "choose"):
-    # todo
+    cursor.execute("delete from Countries where countryID = ?", int(countryID))
 end
 
 %>
@@ -55,7 +54,11 @@ end
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
     <div class="container-fluid">
-        
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Delete Successful</h4>
+            <p>I hope you didn't mess up.</p>
+        </div>
+        <a href="/" class="btn btn-primary px-5">Home</a>
     </div>
 </body>
 </html>
