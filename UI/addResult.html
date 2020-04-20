@@ -16,7 +16,7 @@ stateProvID = request.forms.get("stateSelectValue")
 cityID = request.forms.get("citySelectValue")
 parID = request.forms.get("parSelectValue")
 teeID = request.forms.get("teeSelectValue")
-distance = int(request.forms.get("DistanceValue"))
+distance = request.forms.get("DistanceValue")
 holeNum = request.forms.get("holeSelectValue")
 holeName = request.forms.get("holeNameValue")
 cityName = request.forms.get("cityNameValue")
@@ -29,32 +29,45 @@ addFail = "hidden"
 
 if (not distance):
     distance = 1
+else:
+    distance = int(distance)
+end
 
-try:
-    if (mainSelect == "tee"):
-        cursor.execute("select holeID from holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
-        for row in cursor:
-            holeID = row[0]
-        cursor.execute("{CALL new_HoleTeePar (?,?,?,?)}", int(holeID), int(teeID), int(parID), distance)
-    elif (mainSelect == "hole"):
-        cursor.execute("{CALL new_Hole (?,?,?,?,?,?)", int(courseID), int(holeNum), holeName, int(teeID), int(parID), distance)
-    elif (mainSelect == "default18"):
-        for i in range(1,19):
-            cursor.execute("insert into Holes (CourseID, HoleNum) values (?,?)", int(courseID), i)
-    elif (mainSelect == "course"):
-        cursor.execute("{CALL new_Course (?,?,?)", int(cityID), courseName, "")
-    elif (mainSelect == "city"):
-        cursor.execute("insert into Cities (CityName, StateProvID) values (?,?)", cityName, int(stateProvID))
-    elif (mainSelect == "state"):
-        cursor.execute("{CALL new_StateProv (?,?)}", stateName, int(countryID))
-    elif (mainSelect == "country"):
-        cursor.execute("{CALL new_Country (?)}", countryName)
-    else:
-        addSuccess = "hidden"
-        addFail = ""
-except:
+# try:
+if (mainSelect == "tee"):
+    cursor.execute("select holeID from holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
+    for row in cursor:
+        holeID = row[0]
+    end
+    params = (int(holeID), int(teeID), int(parID), distance)
+    cursor.execute("{CALL new_HoleTeePar (?,?,?,?)}", params)
+elif (mainSelect == "hole"):
+    params = (int(courseID), int(holeNum), holeName, int(teeID), int(parID), distance)
+    cursor.execute("{CALL new_Hole (?,?,?,?,?,?)}", params)
+elif (mainSelect == "default18"):
+    for i in range(1,19):
+        params = (int(courseID), i)
+        cursor.execute("insert into Holes (CourseID, HoleNum) values (?,?)", params)
+    end
+elif (mainSelect == "course"):
+    params = (int(cityID), courseName, "")
+    cursor.execute("{CALL new_Course (?,?,?)}", params)
+elif (mainSelect == "city"):
+    params = (cityName, int(stateProvID))
+    cursor.execute("{CALL new_City (?,?)}", params)
+elif (mainSelect == "state"):
+    params = (stateName, int(countryID))
+    cursor.execute("{CALL new_StateProv (?,?)}", params)
+elif (mainSelect == "country"):
+    params = (countryName,)
+    cursor.execute("{CALL new_Country (?)}", params)
+else:
     addSuccess = "hidden"
     addFail = ""
+end
+# except:
+#     addSuccess = "hidden"
+#     addFail = ""
 end
 
 %>
@@ -85,10 +98,12 @@ end
         <p class="mb-0">Now go <a href="/" class="alert-link">Home</a> and do something else</p>
     </div>
     <div class="alert alert-danger {{addFail}}" role="alert">
-            <h4 class="alert-heading">Something went wrong :(</h4>
-            <p>An error occurred while processing your query</p>
-            <hr>
-            <p class="mb-0">Please return to <a href="/add" class="alert-link">Add Data</a> and try again.</p>
-        </div>
+        <h4 class="alert-heading">Something went wrong:(</h4>
+        <p>An error occurred while processing your query</p>
+        <hr>
+        <p class="mb-0">Please return to <a href="/add" class="alert-link">Add Data</a> and try again.</p>
+    </div>
 </body>
 </html>
+% cursor.close()
+% end
