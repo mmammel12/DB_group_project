@@ -1,5 +1,6 @@
 <%
 import pyodbc
+from bottle import request
 
 server = 'IN-CSCI-MSSQL.ADS.IU.EDU\\SQLSERV2017DEV2' 
 database = 'Group7' 
@@ -10,7 +11,7 @@ cursor = conn.cursor()
 
 mainSelect = request.forms.get("mainSelect")
 courseID = request.forms.get("courseValue")
-countryID = request.forms.get("countryValule")
+countryID = request.forms.get("countryValue")
 stateProvID = request.forms.get("stateValue")
 cityID = request.forms.get("cityValue")
 teeID = request.forms.get("teeValue")
@@ -31,7 +32,7 @@ if (mainSelect == "hole"):
     cursor.execute("select courseName from Courses where courseID = ?", int(courseID))
     row = cursor.fetchone()
     courseName = row[0]
-    deleteStr = "Hole number " + holeID + " on " + courseName
+    deleteStr = "Hole number " + str(holeID) + " on " + courseName
 elif (mainSelect == "combo"):
     cursor.execute("select holeID from Holes where courseID = ? and holeNum = ?", int(courseID), int(holeNum))
     row = cursor.fetchone()
@@ -45,10 +46,11 @@ elif (mainSelect == "combo"):
         cursor.execute("select teeName from Tees where teeID = ?", int(teeID))
         row = cursor.fetchone()
         teeName = row[0]
-        deleteStr = "Hole number " + holeNum + " and Tee " + teeName + " on " + courseName
+        deleteStr = "Hole number " + str(holeNum) + ", " + teeName + " Tee on " + courseName
     else:
         success = "hidden"
         fail = ""
+    end
 elif (mainSelect == "course"):
     cursor.execute("select courseName from Courses where courseID = ?", int(courseID))
     row = cursor.fetchone()
@@ -120,8 +122,8 @@ conn.close()
         <a class="navbar-brand" href="/add">Add Data</a>
         <a class="navbar-brand" href="/delete">Delete Data</a>
     </nav>
-    <div class="container-fluid">
-        <div class="alert alert-danger col-6 mx-3 mt-3 {{fail}}" role="alert">
+    <div class="container-fluid mx-3 mt-3">
+        <div class="alert alert-danger col-6 {{success}}" role="alert">
             <h4 class="alert-heading">Confirm Delete</h4>
             <p>You are about to delete the follow item:</p>
             <br/>
@@ -129,10 +131,10 @@ conn.close()
             <hr>
             <p class="mb-0">This action cannot be undone. Please Confirm or Cancel.</p>
         </div>
-        <div class="alert alert-warning {{fail}}" role="alert">
+        <div class="alert alert-warning col-6 {{fail}}" role="alert">
             An error occurred, please cancel and try again.
         </div>
-        <div class="alert alert-danger {{regionFail}}" role="alert">
+        <div class="alert alert-danger col-6 {{regionFail}}" role="alert">
             Error: A {{region}} can only be deleted if there are no courses that reference it
         </div>
         <form   class="col-6"
