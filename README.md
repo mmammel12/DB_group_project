@@ -7,6 +7,14 @@
 * run `python bottle_app.py`
 * UI is accessible through [http://localhost:8080](http://localhost:8080)
 
+## Driver Error Fix
+If you receive the error
+> InterfaceError('IM003', '[IM003] Specified driver could not be loaded due to system error  126: The specified module could not be found. (ODBC Driver 17 for SQL Server, C:\WINDOWS\SysWOW64\msodbcsql17.dll). (160) (SQLDriverConnect)')
+
+Or similar driver error, you can download the correct driver from:
+
+[Python SQL Driver - pyodbc](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-pyodbc?view=sql-server-ver15)
+
 ## commands
 ```bash
 pipenv install
