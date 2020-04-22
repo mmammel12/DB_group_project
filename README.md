@@ -13,7 +13,7 @@ If you receive the error
 
 Or similar driver error, you can download the correct driver from:
 
-[Python SQL Driver - pyodbc](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-pyodbc?view=sql-server-ver15)
+[Python SQL Driver - pyodbc](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15)
 
 ## commands
 ```bash
